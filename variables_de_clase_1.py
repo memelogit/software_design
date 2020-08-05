@@ -16,9 +16,13 @@ class Gato:
             self.color,
             self.peso
         )
+    
+    def vacunar(self):
+        return 'suministramos {} litros contra la rinotraqueitis'.format(
+            # Multiplicamos el peso por un valor fijo
+            # ¿Qué pasaría si necesitamos cambiar el valor más adelante?
+            self.peso * 0.003
+        )
 
 tom = Gato('Tom', 3, 7, 'café')
-print(tom.detalles())
-
-# Incluso podemos acceder al método detalles y pasar la INSTANCIA 'tom'
-print(Gato.detalles(tom))
+print(tom.vacunar())
