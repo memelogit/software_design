@@ -1,4 +1,4 @@
-import encapsulamiento_lib as encap
+import poo_encapsulation_library as encap
 
 class Aeropuerto:
     def aceptar(self, transporteAereo):
