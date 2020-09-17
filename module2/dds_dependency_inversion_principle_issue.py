@@ -21,20 +21,20 @@ class MySQL:
         self.detalles_conexion = cadena_conexion
 
     # Inicialmente usábamos la implementación de éste método para conectarnos
-    def conectar(self):
-        return 'Conectado usando cadena de conexión {}'.format(
-            self.detalles_conexion
-        )
+    # def conectar(self):
+    #     return 'Conectado usando cadena de conexión {}'.format(
+    #         self.detalles_conexion
+    #     )
     
     # Ahora, suponiendo que el usuario se deba conectar usando el nombre del servicio.
     # Necesitamos modificar la clase Reporte para extraer el nombre del servicio
     # de la cadena de conexión
-    # def conectar(self):
-    #     if ';' in self.detalles_conexion:
-    #         raise Exception('Error: Se está usando el nombre del servicio para la conexión')
-    #     return 'Conectado usando el nombre del servicio {}'.format(
-    #         self.detalles_conexion
-    #     )
+    def conectar(self):
+        if ';' in self.detalles_conexion:
+            raise Exception('Error: Se está usando el nombre del servicio para la conexión')
+        return 'Conectado usando el nombre del servicio {}'.format(
+            self.detalles_conexion
+        )
 
     def insertar(self):
         pass
