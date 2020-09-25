@@ -1,0 +1,76 @@
+{
+    "negocio": {
+        "nombre": "La mestiza",
+        "domicilio": {
+            "calle": "Abasolo 117",
+            "barrio": "El Encino",
+            "ciudad": "Aguascalientes",
+            "estado": "Aguascalientes",
+            "codigo_postal": 20240
+        },
+        "página_web": "http://www.restaurantelamestiza.com.mx/",
+        "telefono": 4499159302
+    },
+    "menu":{
+        "huevos": {
+            "vegetarianos": 25.00,
+            "rancheros": 28.00,
+            "enojados": 27.50,
+            "con_chicharrón": 32.50,
+            "omelette": 31.00
+        },
+        "carnes": {
+            "puerco_en_chile_pasilla": 48.00,
+            "adobada": 46.00,
+            "cecina": 32.50,
+            "bistek_de_res": 52.00,
+            "cochinita": 47.00
+        },
+        "de_la_olla": {
+            "frijoles": 18.00,
+            "frijoles_con_chorizo": 22.00,
+            "jocoque": 46.00,
+            "taquitos_sudados": 31.00
+        },
+        "antojitos": {
+            "quesadilla_sencilla": 11.00,
+            "quesadilla_jamon": 13.00,
+            "taco_de_cochinita": 5.50,
+            "tamal": 8.00,
+            "torta_de_cochinita": 23.00,
+            "panela": 40.00,
+            "gelatina_rompope": 12.00
+        },
+        "bebidas": {
+            "te": 8.00,
+            "vaso_de_leche": 14.00,
+            "refresco": 14.00,
+            "atole_blanco": 16.00,
+            "champurrado": 15.00,
+            "jugo_naranja": 14.00,
+            "atole_de_frutas": 13.00
+        },
+        "cervezas": {
+            "chelada": 40.00,
+            "michelada": 45.00,
+            "gringa": 45.00
+        }
+    },
+    "meseros": [
+        {
+            "nombre": "Carmelo",
+            "edad": 50,
+            "fecha_de_ingreso": "2020-01-01T12:00:00.000000"
+        },
+        {
+            "nombre": "Paul",
+            "edad": 42,
+            "fecha_de_ingreso": "2020-03-01T12:00:00.000000"
+        },
+        {
+            "nombre": "Victor",
+            "edad": 32,
+            "fecha_de_ingreso": "2019-10-16T12:00:00.000000"
+        }
+    ]
+}
