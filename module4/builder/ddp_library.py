@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod, abstractproperty
 from enum import Enum
 
-# 1.- Productos
+# 3.- Productos
 # Los Productos son los objetos resultantes.
 # Los productos construidos por distintos objetos constructores no tienen que
 # pertenecer a la misma jerarquía de clases o interfaz.
@@ -54,7 +54,7 @@ class Cuatrimoto(Estructura):
     def __init__(self):
         super().__init__('cuatrimoto')
 
-# 2- Interface constructora (Builder)
+# 1- Interface constructora (Builder)
 # La interfaz Constructora declara pasos de construcción de producto que todos
 # los tipos de objetos constructores tienen en común.
 class Honda(ABC):
@@ -84,7 +84,7 @@ class Honda(ABC):
     def contenido(self) -> list:
         return self._estructura.partes
 
-# 3.- Constructores concretos
+# 2.- Constructores concretos
 # Los Constructores Concretos ofrecen distintas implementaciones de los pasos
 # de construcción. Los constructores concretos pueden crear productos que no
 # siguen la interfaz común.
