@@ -1,4 +1,4 @@
-from dp_library import AgeOfEmpire
+from ddp_library import AgeOfEmpire
 
 mundo = AgeOfEmpire.crearMundo(AgeOfEmpire.Civilizaciones.AZTECA)
 aldeano1 = mundo.crear_aldeano()
