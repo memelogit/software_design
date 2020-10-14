@@ -63,26 +63,26 @@ class Honda(ABC):
         return self._estructura
 
     def agregar_llantas(self, llantas: int) -> None:
-        self._estructura.agregar_parte(f'{llantas} llantas')
+        self.estructura.agregar_parte(f'{llantas} llantas')
     
     def agregar_asientos(self, asientos: int) -> None:
-        self._estructura.agregar_parte(f'{asientos} asientos')
+        self.estructura.agregar_parte(f'{asientos} asientos')
     
     def agregar_motor(self, motor: str) -> None:
-        self._estructura.agregar_parte(f'motor {motor}')
+        self.estructura.agregar_parte(f'motor {motor}')
     
     def agregar_faros(self, tipo: str) -> None:
-        self._estructura.agregar_parte(f'faros {tipo}')
+        self.estructura.agregar_parte(f'faros {tipo}')
     
     def pintar(self, color: str) -> None:
-        print(f'-I- Pintando {self._estructura} de color {color}...')
+        print(f'-I- Pintando {self.estructura} de color {color}...')
         self._color = color
     
     def verificar(self) -> None:
-        print(f'-I- Verificado últimos detalles de {self._estructura}....')
+        print(f'-I- Verificado últimos detalles de {self.estructura}....')
     
     def contenido(self) -> list:
-        return self._estructura.partes
+        return self.estructura.partes
 
 # 2.- Constructores concretos
 # Los Constructores Concretos ofrecen distintas implementaciones de los pasos
