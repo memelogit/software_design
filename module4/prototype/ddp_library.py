@@ -47,10 +47,6 @@ class Rectangulo(Figura):
     def __copy__(self):
         print('-I- Personalizamos la copia del rectángulo')
         return Rectangulo(self.ancho + 1, self.alto + 1)
-    
-    def __deepcopy__(self, memo):
-        print('-I- Personalizamos la copia produnda del rectángulo')
-        return Rectangulo(self.ancho + 1, self.alto + 1)
 
     def area(self):
         return self.ancho * self.alto
