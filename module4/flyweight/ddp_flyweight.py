@@ -1,4 +1,3 @@
-import json
 from random import randint, choice
 
 # -----------------------------------------------------------------------------
@@ -80,7 +79,7 @@ class Bosque:
 
 if __name__ == "__main__":
     
-    # Definimos los tipos de arboles que queremos plantar
+    # Definimos los tipos de arboles disponibles
     tipos_arboles = [
         ['cerezo', 'hoja_caduca'],
         ['nogal', 'hoja_caduca'],
@@ -90,15 +89,18 @@ if __name__ == "__main__":
         ['naranjo', 'frutal']
     ]
 
+    # Arboles a plantar
+    arboles_seleccionados = tipos_arboles[::2]
+
     # Agregamos los arboles a la fabrica
-    almacen_arboles = FabricaArboles(tipos_arboles[::3])
+    almacen_arboles = FabricaArboles(arboles_seleccionados)
 
     # Creamos el bosque (Contexto)
     print('-I- Creando bosque...')
     colomos = Bosque(almacen_arboles)
     colomos.plantar(randint(0,1000), randint(0,1000), 'alcanfor', 'totoro', 'gigante')
-    for _ in range(1000):
-        colomos.plantar(randint(0,1000), randint(0,1000), *tipos_arboles[randint(0,len(tipos_arboles)-1)])
+    for _ in range(100):
+        colomos.plantar(randint(0,1000), randint(0,1000), *choice(arboles_seleccionados))
 
     # Comprobemos cuantos tipos de arboles tenemos al final
     almacen_arboles.listar_tipos()
