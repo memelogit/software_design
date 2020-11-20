@@ -36,26 +36,26 @@ class ManejadorBase(Manejador):
 class Tarea1(ManejadorBase):
     def manejador(self, peticion: dict) -> str:
         print('-I- Revisando el tipo de prueba')
-        if especificaciones["tipo"] == 'concurrencia':
+        if peticion["tipo"] == 'concurrencia':
             print('-I- Montando ambiente para concurrencia')
-        elif especificaciones["tipo"] == 'stress':
+        elif peticion["tipo"] == 'stress':
             print('-I- Montando ambiente para stress')
         else:
-            print(f'-E- No se ha encontrado un ambiente para {especificaciones["tipo"]}')
+            print(f'-E- No se ha encontrado un ambiente para {peticion["tipo"]}')
             return None
         return super().manejador(peticion)
 
 class Tarea2(ManejadorBase):
     def manejador(self, peticion: dict) -> str:
-        print(f'-I- Iniciando temporizador de {especificaciones["duracion"]} segundos')
-        if especificaciones["duracion"] > 300:
+        print(f'-I- Iniciando temporizador de {peticion["duracion"]} segundos')
+        if peticion["duracion"] > 300:
             print(f'-E- El temporizador supera el tiempo maximo')
             return None
         return super().manejador(peticion)
 
 class Tarea3(ManejadorBase):
     def manejador(self, peticion: dict) -> str:
-        print(f'-I- Ejecutando prueba con benchmark {especificaciones["benchmark"]}')
+        print(f'-I- Ejecutando prueba con benchmark {peticion["benchmark"]}')
         return super().manejador(peticion)
 
 # -----------------------------------------------------------------------------
