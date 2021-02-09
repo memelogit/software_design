@@ -5,7 +5,7 @@ class Salchicha:
     def __init__(self, energia = 18):
         self.__energia = energia
     
-    def obtenerEnergia(self):
+    def obtener_energia(self):
         return self.__energia
 
 class Gato:
@@ -14,7 +14,7 @@ class Gato:
         self.__energia = 100
     
     def alimentar(self, salchicha):
-        self.__energia += salchicha.obtenerEnergia()
+        self.__energia += salchicha.obtener_energia()
         if self.__energia > 100:
             self.__energia = 100
     

@@ -16,21 +16,21 @@ class Transporte(ABC):
         pass
 
     # @abstractmethod
-    def numeroLlantas(self):
+    def numero_llantas(self):
         pass
 
 # Camión
 class Camion(Transporte):
-    def numeroLlantas(self):
+    def numero_llantas(self):
         info = 'Es un camión de 8 llantas'
         return info
 
 class CamionElectrico(Camion):
-    def numeroLlantas(self):
+    def numero_llantas(self):
         return 6
 
 class CamionCombustion(Camion):
-    def numeroLlantas(self):
+    def numero_llantas(self):
         info = 'Es un camión de 8 llantas'
         return info
 

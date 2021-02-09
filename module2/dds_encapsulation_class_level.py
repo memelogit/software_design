@@ -14,7 +14,7 @@ class Impuesto:
     us = 0.07
 
     @classmethod
-    def tasaImpuesto(cls, pais):
+    def tasa_impuestos(cls, pais):
         if pais == 'US':
             return cls.mx
         elif pais == 'MX':
@@ -23,7 +23,7 @@ class Impuesto:
             raise Exception('No se tiene el referencia de impuestos aún.')
     
     @classmethod
-    def cambiarValor(cls, pais, valor):
+    def cambiar_valor(cls, pais, valor):
         pass
 
 class Orden:
@@ -34,11 +34,11 @@ class Orden:
     def agregar(self, producto):
         self.ordenes.append(producto)
 
-    def totalOrden(self):
+    def total_orden(self):
         total = 0
         for orden in self.ordenes:
             total += orden.precio * orden.cantidad
-        total += total * Impuesto.tasaImpuesto(self.pais)
+        total += total * Impuesto.tasa_impuestos(self.pais)
         return total
 
 victor = Orden('MX')
@@ -46,11 +46,11 @@ victor.agregar(Producto('Blusas azules', 5, 120))
 victor.agregar(Producto('Bolsas Lacoste', 2, 4000))
 victor.agregar(Producto('Reloj Michael Kors', 5, 8000))
 
-print(victor.totalOrden())
+print(victor.total_orden())
 
 hugo = Orden('US')
 hugo.agregar(Producto('Blusas azules', 5, 120))
 hugo.agregar(Producto('Bolsas Lacoste', 2, 4000))
 hugo.agregar(Producto('Reloj Michael Kors', 5, 8000))
 
-print(hugo.totalOrden())
+print(hugo.total_orden())

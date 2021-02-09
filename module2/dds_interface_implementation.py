@@ -2,21 +2,21 @@ from abc import ABC, abstractmethod
 
 class Comida(ABC):
     @abstractmethod
-    def obtenerEnergia(self):
+    def obtener_energia(self):
         pass
 
 class Salchicha(Comida):
     def __init__(self, energia = 18):
         self.__energia = energia
     
-    def obtenerEnergia(self):
+    def obtener_energia(self):
         return self.__energia
 
 class Raton(Comida):
     def __init__(self, energia = 40):
         self.__energia = energia
     
-    def obtenerEnergia(self):
+    def obtener_energia(self):
         return self.__energia + 1
 
 class Gato:
@@ -26,7 +26,7 @@ class Gato:
     
     # Ahora nuestro gato se puede alimentar con cualquier tipo de comida
     def alimentar(self, comida):
-        self.__energia += comida.obtenerEnergia()
+        self.__energia += comida.obtener_energia()
         if self.__energia > 100:
             self.__energia = 100
     

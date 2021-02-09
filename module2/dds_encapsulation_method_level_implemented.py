@@ -15,15 +15,15 @@ class Orden:
     def agregar(self, producto):
         self.ordenes.append(producto)
 
-    def totalOrden(self):
+    def total_orden(self):
         total = 0
         for orden in self.ordenes:
             total += orden.precio * orden.cantidad
-        total += total * self.tasaImpuestos()
+        total += total * self.tasa_impuestos()
         return total
     
     # Extraemos el código que determina la tasa de impuestos
-    def tasaImpuestos(self):
+    def tasa_impuestos(self):
         if self.pais == 'US':
             return 0.07
         elif self.pais == 'MX':
@@ -36,11 +36,11 @@ victor.agregar(Producto('Blusas azules', 5, 120))
 victor.agregar(Producto('Bolsas Lacoste', 2, 4000))
 victor.agregar(Producto('Reloj Michael Kors', 5, 8000))
 
-print(victor.totalOrden())
+print(victor.total_orden())
 
 hugo = Orden('US')
 hugo.agregar(Producto('Blusas azules', 5, 120))
 hugo.agregar(Producto('Bolsas Lacoste', 2, 4000))
 hugo.agregar(Producto('Reloj Michael Kors', 5, 8000))
 
-print(hugo.totalOrden())
+print(hugo.total_orden())

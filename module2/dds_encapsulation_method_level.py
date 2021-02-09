@@ -15,7 +15,7 @@ class Orden:
     def agregar(self, producto):
         self.ordenes.append(producto)
 
-    def totalOrden(self):
+    def total_orden(self):
         total = 0
         for orden in self.ordenes:
             total += orden.precio * orden.cantidad
@@ -32,11 +32,11 @@ victor.agregar(Producto('Blusas azules', 5, 120))
 victor.agregar(Producto('Bolsas Lacoste', 2, 4000))
 victor.agregar(Producto('Reloj Michael Kors', 5, 8000))
 
-print(victor.totalOrden())
+print(victor.total_orden())
 
-hugo = Orden('US')
-hugo.agregar(Producto('Blusas azules', 5, 120))
-hugo.agregar(Producto('Bolsas Lacoste', 2, 4000))
-hugo.agregar(Producto('Reloj Michael Kors', 5, 8000))
+antonio = Orden('US')
+antonio.agregar(Producto('Blusas azules', 5, 120))
+antonio.agregar(Producto('Bolsas Lacoste', 2, 4000))
+antonio.agregar(Producto('Reloj Michael Kors', 5, 8000))
 
-print(hugo.totalOrden())
+print(antonio.total_orden())
