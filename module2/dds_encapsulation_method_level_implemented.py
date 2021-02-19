@@ -10,7 +10,7 @@ class Producto:
 class Orden:
     def __init__(self, pais):
         self.pais = pais
-        self.ordenes = []
+        self.ordenes = [] # <- Productos
     
     def agregar(self, producto):
         self.ordenes.append(producto)

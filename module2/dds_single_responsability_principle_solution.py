@@ -3,13 +3,13 @@ class Empleado:
         self._nombre = nombre
         self._tiempos = []
     
-    def obtenerNombre(self):
+    def obtener_nombre(self) -> str:
         return self._nombre
     
-    def nuevoTiempo(self, dia, horas):
+    def nuevo_tiempo(self, dia:int, horas:int) -> str:
         self._tiempos.append(f'El dia {dia} trabajó: {horas} horas.')
 
-    def removerTiempo(self, posicion):
+    def remover_tiempo(self, posicion:int):
         pass
 
 class ReporteTiempos:
@@ -26,9 +26,9 @@ class ReporteTiempos:
         pass
 
 victor = Empleado('Víctor Hugo')
-victor.nuevoTiempo('lunes', 8)
-victor.nuevoTiempo('martes', 8)
-victor.nuevoTiempo('miercoles', 6)
-victor.nuevoTiempo('jueves', 8)
-victor.nuevoTiempo('viernes', 2)
+victor.nuevo_tiempo('lunes', 8)
+victor.nuevo_tiempo('martes', 8)
+victor.nuevo_tiempo('miercoles', 6)
+victor.nuevo_tiempo('jueves', 8)
+victor.nuevo_tiempo('viernes', 2)
 print(ReporteTiempos.imprimir(victor))

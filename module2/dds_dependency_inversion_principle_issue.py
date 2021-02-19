@@ -1,5 +1,7 @@
 from datetime import datetime
 
+# Clase de alto nivel
+# La clase reporte (alto nivel) no deberia de depender de la clase MySQL de bajo nivel
 class Reporte:
     def __init__(self, basededatos):
         self.__basededatos = basededatos
@@ -15,16 +17,17 @@ class Reporte:
     def cerrar(self):
         pass
 
+# Clase de bajo nivel
 class MySQL:
 
     def __init__(self, cadena_conexion):
         self.detalles_conexion = cadena_conexion
 
     # Inicialmente usábamos la implementación de éste método para conectarnos
-    # def conectar(self):
-    #     return 'Conectado usando cadena de conexión {}'.format(
-    #         self.detalles_conexion
-    #     )
+    def conectar(self):
+        return 'Conectado usando cadena de conexión {}'.format(
+            self.detalles_conexion
+        )
     
     # Ahora, suponiendo que el usuario se deba conectar usando el nombre del servicio.
     # Necesitamos modificar la clase Reporte para extraer el nombre del servicio
@@ -45,6 +48,7 @@ class MySQL:
     def eliminar(self):
         pass
 
-db_mysql = MySQL('ServiceName=myServiceName;Database=myDataBase;Uid=myUsername;Pwd=myPassword;')
+# db_mysql = MySQL('ServiceName=myServiceName;Database=myDataBase;Uid=myUsername;Pwd=myPassword;')
+db_mysql = MySQL('myServiceName')
 reporte1 = Reporte(db_mysql)
 reporte1.abir(datetime.now())

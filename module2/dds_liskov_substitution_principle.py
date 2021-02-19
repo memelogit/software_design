@@ -1,30 +1,29 @@
 class Rectangulo:
-    """ ancho, alto"""
     def __init__(self, ancho, alto):
         self._alto = alto
         self._ancho = ancho
 
     @property
-    def area(self):
+    def area(self) -> int:
         return self._ancho * self._alto
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'ancho: {self.ancho}, alto: {self.alto}'
 
     @property
-    def ancho(self):
+    def ancho(self) -> int:
         return self._ancho
 
     @ancho.setter
-    def ancho(self, valor):
+    def ancho(self, valor) -> None:
         self._ancho = valor
 
     @property
-    def alto(self):
+    def alto(self) -> int:
         return self._alto
 
     @alto.setter
-    def alto(self, valor):
+    def alto(self, valor) -> None:
         self._alto = valor
 
 
@@ -33,18 +32,19 @@ class Cuadrado(Rectangulo):
         super().__init__(tamaño, tamaño)
 
     @Rectangulo.ancho.setter
-    def ancho(self, valor):
+    def ancho(self, valor) -> None:
         self._ancho = self._alto = valor
 
     @Rectangulo.alto.setter
-    def alto(self, valor):
+    def alto(self, valor) -> None:
         self._ancho = self._alto = valor
 
 
 def usar(rc):
     alto = rc.alto
-    rc.ancho = 8 # Comportamiento no esperado
-    expected = int(alto * rc.ancho)
+    ancho = rc.ancho
+    rc.ancho = 2 # Comportamiento no esperado
+    expected = int(alto * ancho)
     print(f'Se espera un área de {expected}, se obtiene {rc.area}')
 
 

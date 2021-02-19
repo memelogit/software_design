@@ -4,7 +4,7 @@ class Maquina(ABC):
     def imprimir(self, documento):
         raise NotImplementedError()
 
-    def enviarFax(self, documento):
+    def enviar_fax(self, documento):
         raise NotImplementedError()
 
     def escanear(self, documento):
@@ -16,7 +16,7 @@ class ImpresoraMultifuncional(Maquina):
     def imprimir(self, documento):
         pass
 
-    def enviarFax(self, documento):
+    def enviar_fax(self, documento):
         pass
 
     def escanear(self, documento):
@@ -28,7 +28,7 @@ class ImpresoraViejita(Maquina):
         # ok - imprimimos cosas
         pass
 
-    def enviarFax(self, documento):
+    def enviar_fax(self, documento):
         pass  # no hacemos nada
 
     def escanear(self, documento):
@@ -49,14 +49,14 @@ class Scanner(ABC):
 # ...lo mismo para fax, etc
 
 class MiImpresora(Impresora):
-    def imprimir(self, documento):
+    def imprimir(self, documento) -> str:
         return 'Imprimiendo documento...\n{}'.format(documento)
 
 class Fotocopiadora(Impresora, Scanner):
-    def imprimir(self, documento):
+    def imprimir(self, documento) -> str:
         return 'Imprimiendo documento...\n{}'.format(documento)
 
-    def escanear(self, documento):
+    def escanear(self, documento) -> str:
         return 'Escaneando documento...\n{}'.format(documento)
 
 # Incluso podemos crear una clase para un equipo multifuncional
@@ -71,7 +71,7 @@ class EquipoMultifuncional(Impresora, Scanner):  # , Fax, etc
 
 
 impresora = ImpresoraViejita()
-impresora.enviarFax(123)  # No pasa nada
+impresora.enviar_fax(123)  # No pasa nada
 impresora.escanear(123)   # oops!
 
 copiadora = Fotocopiadora()
