@@ -98,7 +98,7 @@ class Zombie:
             return estado
         elif self.mas_de_20_segundos_sin_comer():
             return 'enfadado'
-        elif mas_de_5_segundos_sin_comer(self):
+        elif self.mas_de_5_segundos_sin_comer():
             return 'normal'
         else:
             return 'contento'
@@ -148,17 +148,14 @@ class Zombie:
         else:
             return f'No se recomienda ir al {lugar}. Desaparecerá antes', False
     
-    def buscarCerebros(self, radio: int):
+    # Aplicar Split temporary variable
+    def buscar_cerebros(self, radio: int):
         ''' Regresa los detalles asociados a la búsqueda de cerebros. El
             radio está en kilómetros'''
-        perimetro = 2 * pi * radio
-        area = pi * pow(radio, 2)
-        return '''Detalles de la búsqueda
-        perímetro: {} km
-        radio    : {} km'''.format(
-            perimetro,
-            area
-        )
+        return f'''Detalles de la búsqueda
+        perímetro: {2 * pi * radio} km
+        radio    : {pi * pow(radio, 2)} km
+        '''
     
     def construirRefugio(self, ramas, tipo):
         # Necesitamos 4 postes y 4 paredes
@@ -184,7 +181,8 @@ if __name__ == "__main__":
     print('-I- Encontramos uno, a comer...')
     zombie_bailarin.comer()
     print('-I- Buscando cerebros...')
-    sleep(11)
+    print(f'-I- {zombie_bailarin.buscar_cerebros(2)}')
+    sleep(3)
 
     # Obtenemos los detalles de nuestro Zombie
     print(zombie_bailarin.info())
