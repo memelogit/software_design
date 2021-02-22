@@ -1,10 +1,11 @@
 # ---------------------------------------------------------------------------------------------
-# * Equipo:
+# * Equipo: N
 # Nombre de los integrantes del equipo
 # - 
 # -
 # ---------------------------------------------------------------------------------------------
 
+from __future__ import annotations
 from abc import ABC
 from time import sleep
 
@@ -12,7 +13,17 @@ class Personaje:
     def __init__(self, nombre:str):
         self.nombre = nombre
         self.mochilas = None
+        self.vida = 100
     
+    def comer(self, alimento:Alimento):
+        '''
+        El personaje consume los alimentos para ganar vida
+        '''
+        self.vida += alimento.aporte_vida
+
+class Alimento(ABC):
+    pass
+
 class Mochila:
     '''
     La mochila tiene la capacidad de guardar un número limitado de artículos
@@ -23,7 +34,7 @@ class Mochila:
         self.items = []
     
     # ---------------------------------------------------------------------------------------------
-    # * RETO ** Replace data value with object
+    # * RETO
     # ---------------------------------------------------------------------------------------------
     # Objetivo: recoger colecciones de objetos a la mochila. Los objetos se pueden agrupar. No hace
     # falta conocer el numero de objetos. Actualmente solo es posible incluir los nombres de los
@@ -43,24 +54,24 @@ class Mochila:
             raise ValueError(f'Se alcanzo la capacidad máxima de tu mochila, {self._max_items} en total')
 
     # ---------------------------------------------------------------------------------------------
-    # * RETO ** Replace type code with state/strategy
+    # * RETO
     # ---------------------------------------------------------------------------------------------
     # Objetivo: Poder guardar herramientas dentro de la mochila, pero una version de la herramienta
     # a la vez. Por ejemplo, no se puede tener un Hacha normal y un Hacha de lujo en la misma mochila.
     #
     # ---------------------------------------------------------------------------------------------
-    # * RETO ** Consolidate Conditional Expression
+    # * RETO
     # ---------------------------------------------------------------------------------------------
     # Objetivo: Consolidad las expresiones en las condicionales
     #
     # ---------------------------------------------------------------------------------------------
-    # * RETO ** Decompose conditional
+    # * RETO
     # ---------------------------------------------------------------------------------------------
     # La lógica de las condicionales parece algo compleja 
     # Objetivo: Crear métodos para el manero de las expresiones en las condicionales
     #
     # ---------------------------------------------------------------------------------------------
-    # * RETO ** Consolidate Duplicate Conditional Fragments
+    # * RETO
     # ---------------------------------------------------------------------------------------------
     # Existe código que se repite constantemente
     # Objetivo: Evitar duplicidad de código en cada una de las ramas de las condicionales
@@ -108,7 +119,7 @@ class Mochila:
             return False
     
     # ---------------------------------------------------------------------------------------------
-    # * RETO ** Replace magic number with symbolic constant
+    # * RETO
     # ---------------------------------------------------------------------------------------------
     # Objetivo: Reemplazar los números con variables de clase.
     # Se puede aplicar a todo el código, no solamente a este dunder method.
@@ -118,7 +129,7 @@ class Mochila:
         return f'''{self.nombre:^50}\n{"="*50}\n{list_items}'''
 
 # ---------------------------------------------------------------------------------------------
-# * RETO ** Assertion
+# * RETO
 # ---------------------------------------------------------------------------------------------
 # Objetivo: Agrega el metodo "demoler" con un "assert" el cual suponga que se tiene al menos
 # 1 de durabilidad antes de ejecutar la acción.
@@ -161,7 +172,6 @@ class HachaLujo:
     def __str__(self) -> str:
         return 'Hacha de Lujo'
 
-
 class Fogata:
     '''
     Una fogata es la clave para la supervivencia básica en el mundo. Aporta luz, calor y permite
@@ -174,7 +184,7 @@ class Fogata:
         pass
 
     # ---------------------------------------------------------------------------------------------
-    # * RETO ** Replace Conditional with Polymorphism
+    # * RETO
     # ---------------------------------------------------------------------------------------------
     # Los alimentos tienen diferentes tiempos de cocción. No queremos tener condicionales, entonces
     # usamos refactorización. Se ha comentado parte del código original.
@@ -213,6 +223,13 @@ if __name__ == '__main__':
     backpack.fabricar('martillo')
     backpack.fabricar('hacha')
     backpack.fabricar('hacha_lujo')
+
+    # ---------------------------------------------------------------------------------------------
+    # * RETO
+    # ---------------------------------------------------------------------------------------------
+    # Objetivo: Agregar al menos dos alimentos que se puedan cocinar en la fogata. Crear una fogata,
+    # Cocinar los alimentos en la fogata y comer los alimentos.
+    # 
 
     # Listamos los articulos en nuestra mochila
     print(backpack)
