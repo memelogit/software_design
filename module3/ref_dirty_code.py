@@ -157,7 +157,7 @@ class Zombie:
         radio    : {pi * pow(radio, 2)} km
         '''
     
-    def construirRefugio(self, ramas, tipo):
+    def construir_refugio(self, ramas, tipo):
         # Necesitamos 4 postes y 4 paredes
         self.refugio = Construccion(ramas, tipo)
         return 'Refugio {} construido. postes: {}, paredes: {}'.format(
@@ -197,7 +197,7 @@ if __name__ == "__main__":
     # Generemos un refugio, necesitamos 4 postes y 4 paredes de madera
     print('-I- Creando un refugio...')
     ramas = 1200
-    print(zombie_bailarin.construirRefugio(ramas, 'apocalipsis'))
+    print(zombie_bailarin.construir_refugio(ramas, 'apocalipsis'))
 
     # Veamos cuantas ramas nos sobran
     print(f'De las {ramas} ramas, despues de contruir quedan {zombie_bailarin.refugio.ramas}')

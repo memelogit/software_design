@@ -6,35 +6,35 @@ from enum import Enum
 # -----------------------------------------------------------------------------
 class Bloque(ABC):
     @abstractmethod
-    def colocar(self):
+    def colocar(self) -> str:
         pass
 
 class Arma(ABC):
     @abstractmethod
-    def usar(self):
+    def usar(self) -> str:
         pass
 
 # -----------------------------------------------------------------------------
 # 2.- PRODUTOS CONCRETOS
 # -----------------------------------------------------------------------------
 class Piedra(Bloque):
-    def colocar(self):
+    def colocar(self) -> str:
         print("-I- Bloque del tipo 'piedra' insertado")
 
 class Granito(Bloque):
-    def colocar(self):
+    def colocar(self) -> str:
         print("-I- Bloque del tipo 'granito' insertado")
 
 class Pasto(Bloque):
-    def colocar(self):
+    def colocar(self) -> str:
         print("-I- Bloque del tipo 'pasto' insertado")
 
 class Horno(Bloque):
-    def colocar(self):
+    def colocar(self) -> str:
         print("-I- Bloque del tipo 'horno' insertado")
 
 class CamaPiedra(Bloque):
-    def colocar(self):
+    def colocar(self) -> str:
         print("-I- Bloque del tipo 'cama de piedra' insertado")
 
 # -----------------------------------------------------------------------------
@@ -42,11 +42,11 @@ class CamaPiedra(Bloque):
 # -----------------------------------------------------------------------------
 class Mundo:
     @abstractmethod
-    def crearBloque(self, tipo) -> Bloque:
+    def crear_bloque(self, tipo) -> Bloque:
         pass
 
     def colocar(self, tipo) -> str:
-        bloque = self.crearBloque(tipo)
+        bloque = self.crear_bloque(tipo)
         return bloque.colocar()
     
     def minar(self, bloque) -> None:
@@ -63,7 +63,7 @@ class ModoCreativo(Mundo):
         PASTO          = Pasto()
         CAMA_DE_PIEDRA = CamaPiedra()
 
-    def crearBloque(self, tipo: TipoBloque) -> Bloque:
+    def crear_bloque(self, tipo: TipoBloque) -> Bloque:
         return tipo.value
 
 class ModoSupervivencia(Mundo):
@@ -74,5 +74,5 @@ class ModoSupervivencia(Mundo):
         PASTO          = Pasto()
         HORNO          = Horno()
 
-    def crearBloque(self, tipo: TipoBloque) -> Bloque:
+    def crear_bloque(self, tipo: TipoBloque) -> Bloque:
         return tipo.value
