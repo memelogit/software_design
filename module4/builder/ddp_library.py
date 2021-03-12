@@ -99,13 +99,13 @@ class HondaAuto(Honda):
         self._estructura = tipo.value
     
     def agregar_puertas(self, puertas: int) -> None:
-        self._estructura.agregar_parte(f'{puertas} puertas')
+        self.estructura.agregar_parte(f'{puertas} puertas')
     
     def agregar_sistema_audio(self, tipo: str) -> None:
-        self._estructura.agregar_parte(f'sistema de audio {tipo}')
+        self.estructura.agregar_parte(f'sistema de audio {tipo}')
 
     def agregar_quemacocos(self) -> None:
-        self._estructura.agregar_parte('quemacocos')
+        self.estructura.agregar_parte('quemacocos')
 
 class HondaMoto(Honda):
 
