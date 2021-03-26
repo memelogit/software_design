@@ -9,7 +9,25 @@ class Empleado:
 
     def pagar(self) -> str:
         return (f'-I- Pagando al empleado...\n'
-                f'{self.persona.depositar_nomina()}')
+                f'{self.persona.pagar()}')
+
+    # Queremos delegar la llamada a traves del objeto persona
+    # -->
+    def pagar_profesor(self):
+        ''' Pagamos al profesor por horas trabajadas'''
+
+    def pagar_administrativo(self):
+        ''' Pagamos al administrativo un salario fijo '''
+
+    def pagar_empleado_confianza(self):
+        ''' Pagamos al empleado de confianza un bono adicional '''
+    # <---
+
+    def ver_perfil(self):
+        pass
+
+    def correr(self):
+        pass
 
 # 2.- Implementación
 # La Implementación declara la interfaz común a todas las implementaciones
@@ -21,7 +39,7 @@ class Empleado:
 # por la implementación.
 class Persona(ABC):
     @abstractmethod
-    def depositar_nomina(self) -> str:
+    def pagar(self) -> str:
         pass
 
 # 3.- Implementaciones concretas
@@ -33,12 +51,12 @@ class Profesor(Persona):
     def __init__(self, horas:int = 8):
         self.horas = horas
 
-    def depositar_nomina(self) -> str:
+    def pagar(self) -> str:
         return (f'    La nómina ha sido depositada al Profesor\n'
                 f'    {self.horas} horas x ${Profesor.PAGO_POR_HORA} pesos = ${self.horas * self.PAGO_POR_HORA}')
 
 class Administrativo(Persona):
-    def depositar_nomina(self) -> str:
+    def pagar(self) -> str:
         return ('    La nómina ha sido depositada al Administrativo\n'
                 '    $50,0000 pesos como pago fijo')
 
@@ -49,7 +67,7 @@ class Administrativo(Persona):
 class EmpleadoConfianza(Empleado):
     def pagar(self) -> str:
         return ('-I- Pagando al empleado de confianza...\n'
-                f'{self.persona.depositar_nomina()}\n'
+                f'{self.persona.pagar()}\n'
                 '    Bono adicional de $3,000 pesos')
 
 if __name__ == "__main__":
@@ -61,6 +79,6 @@ if __name__ == "__main__":
         Empleado(Profesor(12))
     ]
 
+    # El pago de la nomina en el codigo del cliente resulta sumamente sencillo
     for empleado in escuela:
-        
         print(empleado.pagar())

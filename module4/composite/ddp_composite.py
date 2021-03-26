@@ -18,15 +18,6 @@ class Elemento(ABC):
     def base(self, base):
         self._base = base
 
-    def agragar(self, elemento) -> None:
-        pass
-
-    def eliminar(self, elemento) -> None:
-        pass
-
-    def es_componente(self) -> bool:
-        return False
-
     @abstractmethod
     def mostrar(self, indent: int = 0) -> str:
         pass
@@ -64,7 +55,7 @@ class Departamento(Elemento):
         self.hijos = []
         self.nombre = nombre
 
-    def agragar(self, elemento: Elemento) -> None:
+    def agregar(self, elemento: Elemento) -> None:
         self.hijos.append(elemento)
         elemento.base = self
 
@@ -109,20 +100,20 @@ if __name__ == "__main__":
     iteso = Departamento('Rectoría')
 
     administracion = Departamento('Dirección de administración y finanzas')
-    administracion.agragar(Persona('Pedro'))
-    administracion.agragar(Persona('Rogelio'))
+    administracion.agregar(Persona('Pedro'))
+    administracion.agregar(Persona('Rogelio'))
 
     academia = Departamento('Dirección general académica')
     desi = Departamento('Departamento de electrónica, sistemas e informática')
-    desi.agragar(Persona('Iván Villalón'))
-    desi.agragar(Persona('Francisco Cervantes'))
+    desi.agregar(Persona('Iván Villalón'))
+    desi.agregar(Persona('Francisco Cervantes'))
     dfh = Departamento('Departamento de formación humana')
-    dfh.agragar(Persona('Juan Pablo'))
-    academia.agragar(desi)
-    academia.agragar(dfh)
+    dfh.agregar(Persona('Juan Pablo'))
+    academia.agregar(desi)
+    academia.agregar(dfh)
 
-    iteso.agragar(administracion)
-    iteso.agragar(academia)
+    iteso.agregar(administracion)
+    iteso.agregar(academia)
 
     print('-I- ¿Cuál sería el costo de la nómina del ITESO? (Una arbol)')
     calcular_costo(iteso.costo())
