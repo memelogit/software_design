@@ -172,3 +172,15 @@ class AgeOfEmpire:
     @classmethod
     def crearMundo(cls, tipo: Civilizaciones) -> Civilizacion:
         return tipo.value
+
+# Codigo cliente
+# Cuando yo llame al archivo con python ddp_library.py
+if __name__ == "__main__":
+    mundo = AgeOfEmpire.crearMundo(AgeOfEmpire.Civilizaciones.AZTECA)
+
+    # El codigo del juego
+    aldeano1 = mundo.crear_aldeano() # Boton de crear aldeano
+    arquero1 = mundo.crear_arquero()
+    milicia1 = mundo.crear_milicia()
+    aldeano1.recolectar()
+    milicia1.atacar()

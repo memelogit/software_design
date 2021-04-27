@@ -2,9 +2,9 @@ from collections.abc import Iterable, Iterator
 from enum import Enum
 
 # -----------------------------------------------------------------------------
-# 2.- Iterador concreto
+# 2.- IteradorConcreto concreto
 # -----------------------------------------------------------------------------
-class Iterador(Iterator):
+class IteradorConcreto(Iterator):
 
     class Tipo(Enum):
         KEY_1 = 0,
@@ -45,10 +45,10 @@ class Calificaciones(Iterable):
         self._coleccion = coleccion
 
     def __iter__(self):
-        return Iterador(self._coleccion)
+        return IteradorConcreto(self._coleccion)
 
     def calificacion_mas_alta_primero(self):
-        return Iterador(self._coleccion, Iterador.Tipo.KEY_2_REV)
+        return IteradorConcreto(self._coleccion, IteradorConcreto.Tipo.KEY_2_REV)
 
     def registrar(self, alumno, calificacion):
         self._coleccion[alumno] = calificacion
@@ -59,10 +59,10 @@ class Productos(Iterable):
         self._productos = productos
     
     def __iter__(self):
-        return Iterador(self._productos)
+        return IteradorConcreto(self._productos)
 
     def precio_mas_bajo_primero(self):
-        return Iterador(self._productos, Iterador.Tipo.KEY_2)
+        return IteradorConcreto(self._productos, IteradorConcreto.Tipo.KEY_2)
 
     def registrar(self, producto, precio):
         self._productos[producto] = precio
