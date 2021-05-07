@@ -30,29 +30,27 @@ class DB(Curso):
 # Visitor
 class Visitor(ABC):
     @abstractmethod
-    def visitar_dds(self, element: DDS) -> None:
+    def visitar_dds(self, elemento: DDS) -> None:
         pass
 
     @abstractmethod
-    def visitar_db(self, element: DB) -> None:
+    def visitar_db(self, elemento: DB) -> None:
         pass
 
 class Profesor(Visitor):
-    def visitar_dds(self, element) -> None:
-        print(f'-I- Profesor: {element.descargar_lista_estudiantes()}')
-        # print(f'-I- Profesor: {element.descargar_codigos()}')
+    def visitar_dds(self, elemento) -> None:
+        print(f'-I- Profesor: {elemento.descargar_lista_estudiantes()}')
 
-    def visitar_db(self, element) -> None:
-        print(f'-I- Profesor: {element.descargar_lista_estudiantes()}')
-        # print(f'-I- Profesor: {element.montar_db()}')
+    def visitar_db(self, elemento) -> None:
+        print(f'-I- Profesor: {elemento.descargar_lista_estudiantes()}')
 
 
 class Estudiante(Visitor):
-    def visitar_dds(self, element) -> None:
-        print(f'-I- Estudiante: {element.descargar_codigos()}')
+    def visitar_dds(self, elemento) -> None:
+        print(f'-I- Estudiante: {elemento.descargar_codigos()}')
 
-    def visitar_db(self, element) -> None:
-        print(f'-I- Estudiante: {element.montar_db()}')
+    def visitar_db(self, elemento) -> None:
+        print(f'-I- Estudiante: {elemento.montar_db()}')
 
 
 def canvas(components: List[Curso], visitor: Visitor) -> None:
