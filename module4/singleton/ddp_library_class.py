@@ -9,6 +9,7 @@ class Sesion:
         if Sesion._INSTANCIA == None:
             self.usuario = usuario
             Sesion._INSTANCIA = self
+            print(f'-I- {usuario}')
         else:
             print('-E- Ya existe un usuario en la sesión')
     
@@ -18,3 +19,9 @@ class Sesion:
     
     def logout(self) -> None:
         Sesion._INSTANCIA = None
+
+if __name__ == '__main__':
+    s1 = Sesion('usuario 1')
+    s1.logout()
+    s2 = Sesion('usuario 2')
+    s3 = Sesion('usuario 3')
