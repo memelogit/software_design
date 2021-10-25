@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 # El Componente declara la interfaz común tanto para wrappers como para objetos
 # envueltos
 # -----------------------------------------------------------------------------
-class Mascara(ABC):
+class Enmascarado(ABC):
     @abstractmethod
     def usar(self) -> str:
         pass
@@ -18,14 +18,14 @@ class Mascara(ABC):
 # Componente Concreto es una clase de objetos envueltos. Definen el
 # comportamiento básico, que los decoradores pueden alterar
 # -----------------------------------------------------------------------------
-class Link(Mascara):
+class Link(Enmascarado):
     def usar(self) -> str:
         return "Link"
     
     def andar(self) -> str:
         return "Caminando..."
 
-class SkullKid(Mascara):
+class SkullKid(Enmascarado):
     def usar(self) -> str:
         return "Skull Kid"
     
@@ -40,19 +40,14 @@ class SkullKid(Mascara):
 # pueda contener tanto los componentes concretos como los decoradores.
 # La clase decoradora base delega todas las operaciones al objeto envuelto.
 # -----------------------------------------------------------------------------
-class Decorator(Mascara):
-    
-    _mascara: Mascara = None
+class Decorator(Enmascarado):
 
-    def __init__(self, mascara: Mascara) -> None:
+    def __init__(self, mascara: Enmascarado) -> None:
         self._mascara = mascara
 
     @property
     def mascara(self) -> str:
         return self._mascara
-
-    def usar(self) -> str:
-        return self._mascara.usar()
 
 # -----------------------------------------------------------------------------
 # 4.- Decoradores Concretos
