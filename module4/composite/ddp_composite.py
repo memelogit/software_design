@@ -11,12 +11,12 @@ from enum import Enum
 class Elemento(ABC):
 
     @property
-    def base(self): # -> Elemento
+    def padre(self): # -> Elemento
         return self._base
 
-    @base.setter
-    def base(self, base):
-        self._base = base
+    @padre.setter
+    def padre(self, padre):
+        self._base = padre
 
     @abstractmethod
     def mostrar(self, indent: int = 0) -> str:
@@ -57,14 +57,11 @@ class Departamento(Elemento):
 
     def agregar(self, elemento: Elemento) -> None:
         self.hijos.append(elemento)
-        elemento.base = self
+        elemento.padre = self
 
     def eliminar(self, elemento: Elemento) -> None:
         self.hijos.remove(elemento)
-        elemento.base = None
-
-    def es_componente(self) -> bool:
-        return True
+        elemento.padre = None
 
     def costo(self) -> int:
         costo_total = 0

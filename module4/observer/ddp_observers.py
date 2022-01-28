@@ -33,12 +33,12 @@ class Suscriptor(ABC):
 # Suscriptores concretos
 class AppleStore(Suscriptor):
     def actualizar(self, empresa: Apple) -> None:
-      print(f"    AppleStore: Reaccino al anuncio, pidiendo {randint(50, 100)} {empresa._producto}")
+      print(f"    AppleStore: Recibió al anuncio, pidiendo {randint(50, 100)} {empresa._producto}")
 
 class Liverpool(Suscriptor):
     def actualizar(self, empresa: Apple) -> None:
         if empresa._producto in ['iphone', 'ipad']: # Solamente estamos interesados en estos productos
-          print(f"    Liverpool: Reaccino al anuncio, pidiendo {randint(10, 50)} productos")
+          print(f"    Liverpool: Recibió al anuncio, pidiendo {randint(10, 50)} productos")
         else:
           print("    Liverpool no esta interesado en este producto")
 
