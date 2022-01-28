@@ -1,25 +1,23 @@
-class Empresa:
+# RELACIONES ENTRE CLASES Y OBJETOS
 
-    def __init__(self, nombre, enfoque):
+from __future__ import annotations
+
+# A
+class Persona:
+    def __init__(self, nombre:str, empresa:Empresa) -> None:
+        self.nombre = nombre
+        self.empresa = empresa # <- Aquí se da la asociación
+    def __str__(self) -> str:
+        return f'{self.nombre} trabaja en una empresa de {self.empresa.enfoque} llamada {self.empresa}'
+
+# B
+class Empresa:
+    def __init__(self, nombre:str, enfoque:str) -> None:
         self.nombre = nombre
         self.enfoque = enfoque
-    
-    def __str__(self):
+    def __str__(self) -> str:
         return self.nombre
 
-class Persona:
-
-    def __init__(self, nombre, empresa):
-        self.nombre = nombre
-        self.empresa = empresa
-    
-    def __str__(self):
-        return '{} trabaja en una empresa de {} llamada {}'.format(
-            self.nombre,
-            self.empresa.enfoque,
-            self.empresa
-        )
-
-oracle = Empresa('ITESO', 'educación')
-victor = Persona('Victor', oracle)
+iteso = Empresa('ITESO', 'educación')
+victor = Persona('Víctor', iteso)
 print(victor)

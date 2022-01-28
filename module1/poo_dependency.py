@@ -1,24 +1,24 @@
+from __future__ import annotations
+
 class Videocasetera:
 
     def __init__(self, nombre):
         self.nombre = nombre
     
-    def iniciar(self):
+    def iniciar(self) -> None:
         pass
 
-    def parar(self):
+    def parar(self) -> None:
         pass
 
-    def rebobinar(self):
+    def rebobinar(self) -> None:
         pass
 
-    def reproducirEn(self, canal):
-        print('reproduciendo... {}'. format(
-            canal.sintonizar()
-        ))
+    def reproducirEn(self, canal:Canal) -> str:
+        return f'reproduciendo... {canal.sintonizar()}'
 
 class Canal:
-    def __init__(self, numero_de_canal):
+    def __init__(self, numero_de_canal:int):
         self.numero_de_canal = numero_de_canal
     
     def sintonizar(self):
@@ -28,4 +28,4 @@ class Canal:
 
 canal3 = Canal(3)
 vcr1 = Videocasetera('VCR_1')
-vcr1.reproducirEn(canal3)
+print(vcr1.reproducirEn(canal3))
