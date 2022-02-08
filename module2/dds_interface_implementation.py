@@ -1,55 +1,43 @@
-from abc import ABC, abstractmethod
+# 8 de Febrero
+# Principios del diseño de software (3)
 
-class Comida(ABC):
-    @abstractmethod
+from abc import ABC
+
+# Interface
+class Alimento(ABC):
     def obtener_energia(self):
-        pass
+        ''' Retorna el valor de la energia de la salchicha '''
+        return self._energia
 
-class Salchicha(Comida):
-    def __init__(self, energia = 18):
-        self.__energia = energia
-    
-    def obtener_energia(self):
-        return self.__energia
+# Clases concretas
+class Salchicha(Alimento):
+    def __init__(self, energia:int=18) -> None:
+        self._energia = energia
+class Raton(Alimento):
+    def __init__(self, energia:int=40) -> None:
+        self._energia = energia
 
-class Raton(Comida):
-    def __init__(self, energia = 40):
-        self.__energia = energia
-    
-    def obtener_energia(self):
-        return self.__energia + 1
-
+# Clase Gato
 class Gato:
-    def __init__(self, nombre):
+    def __init__(self, nombre:str) -> None:
         self.nombre = nombre
-        self.__energia = 100
+        self._energia = 100
     
-    # Ahora nuestro gato se puede alimentar con cualquier tipo de comida
-    def alimentar(self, comida):
-        self.__energia += comida.obtener_energia()
-        if self.__energia > 100:
-            self.__energia = 100
+    def alimentar(self, alimento:Alimento) -> None:
+        self._energia += alimento.obtener_energia() # Polimorfismo
+        if self._energia > 100: self._energia = 100
     
-    def jugar(self):
-        self.__energia -= 30
+    def jugar(self) -> None:
+        ''' Gasta energia '''
+        self._energia -= 30
     
-    def __str__(self):
-        return 'a {} le queda {} porciento de energía'.format(
-            self.nombre,
-            self.__energia
-        )
+    def __str__(self) -> str:
+        return f'A nuestro gato {self.nombre} le queda {self._energia}% de energía'
 
-salchicha1 = Salchicha()
-tom = Gato('Tomás')
-tom.jugar()
-print(tom)
-
-tom.alimentar(salchicha1)
-print(tom)
-
-# Ahora probamos con un ratón
-gusgus = Raton()
-tom.jugar()
-print(tom)
-tom.alimentar(gusgus)
-print(tom)
+# Testing
+if __name__ == '__main__':
+    tom = Gato('Tomás') #100%
+    tom.jugar() # 70%
+    print(tom)
+    tom.alimentar(Raton()) # +18%
+    print(tom)
