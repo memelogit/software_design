@@ -32,7 +32,7 @@ class Construccion:
         self.ramas = ramas
         self.tipo = tipo
     
-    # ¿Qué metodo de refactorización aplicamos aquí?
+    # ¿Qué metodo de refactorización se aplicó aquí?
     def validarRamas(self, objeto, cantidad):
         if self.tipo not in Construccion.objetos:
             raise Exception('el tipo de poste no es válido')
