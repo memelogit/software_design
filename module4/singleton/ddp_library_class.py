@@ -14,7 +14,7 @@ class Sesion:
             print('-E- Ya existe un usuario en la sesión')
     
     @classmethod
-    def obtener_sesion(cls) -> Session:
+    def obtener_sesion(cls) -> Sesion:
         return cls._INSTANCIA
     
     def logout(self) -> None:
