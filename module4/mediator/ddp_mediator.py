@@ -45,7 +45,7 @@ class SalaChat:
         self.personas.append(persona)
     
     def salir(self, persona: Persona) -> None:
-        self.broadcast(self.moderador, f'{persona.nombre} ha abandonado del chat')
+        self.broadcast(self.moderador, f'{persona.nombre} ha abandonado la sala de chat')
         self.personas.remove(persona)
 
 if __name__ == '__main__':

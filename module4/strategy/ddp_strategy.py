@@ -1,6 +1,7 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 
+# Context
 class TerminalBancaria():
     def __init__(self, strategy: Strategy) -> None:
         self._strategy = strategy
@@ -17,12 +18,13 @@ class TerminalBancaria():
         print('TerminalBancaria: Ingreses su')
         self._strategy.cobrar(monto)
 
-
+# Strategy
 class Strategy(ABC):
     @abstractmethod
     def cobrar(self, cantidad:int):
         pass
 
+# Concrete Strategies
 class Contado(Strategy):
     def cobrar(self, cantidad:int) -> None:
         print(f'-I- Cobrando ${cantidad} pesos en un solo pago')
@@ -35,6 +37,7 @@ class Puntos(Strategy):
     def cobrar(self, cantidad:int) -> None:
         print(f'-I- Cobrando ${cantidad} pesos en puntos. {cantidad*10} gastados.')
 
+# Client code
 if __name__ == "__main__":
     print('-I- Terminal BBVA')
     monto = float(input('monto: $'))

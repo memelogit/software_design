@@ -154,7 +154,7 @@ class Zombie:
             radio está en kilómetros'''
         return f'''Detalles de la búsqueda
         perímetro: {2 * pi * radio} km
-        radio    : {pi * pow(radio, 2)} km
+        area     : {pi * pow(radio, 2)} km
         '''
     
     def construir_refugio(self, ramas, tipo):

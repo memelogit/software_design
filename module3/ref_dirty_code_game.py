@@ -41,7 +41,7 @@ class Mochila:
     # articulos.
     # 
     # Por ejemplo:
-    #  - palitos x 5
+    #  - palitos x 5 regcoger
     #  - rocas x 4
     #
     def recoger(self, nombre:str) -> None:
