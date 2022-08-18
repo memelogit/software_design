@@ -1,7 +1,4 @@
-''' poo_class.py
-Programación orientada a objetos
-Conceptos básicos de POO y UML
-'''
+# Programación orientada a objetos > Conceptos básicos de POO y UML
 
 class Gato:
     ''' Clase gato simple sin ningún atributo o método '''
@@ -20,5 +17,9 @@ if __name__ == '__main__':
     luna.peso = 5
     luna.color = 'gris'
 
+    # La siguiente linea muestra la referencia en memoria al objeto
     print(tom)
-    print(luna)
+
+    # La siguiente linea muestra el valor del atributo asignado al objeto top
+    print(tom.nombre)
+    print(luna.nombre)

@@ -1,14 +1,18 @@
+# Programación orientada a objetos > Conceptos básicos de POO y UML
+
 class Animal:
+    ''' Crea un objeto del tipo animal '''
 
-    vidas = 1
+    VIDAS = 1
 
-    def __init__(self, nombre, edad, peso, color):
-        self.nombre = nombre
-        self.edad = edad
-        self.peso = peso
-        self.color = color
+    def __init__(self, nombre:str, edad:int, peso:float, color:str):
+        self.nombre:str = nombre
+        self.edad:int = edad
+        self.peso:float = peso
+        self.color:str = color
     
-    def detalles(self):
+    def detalles(self) -> str:
+        ''' Regresa los detalles asociados a un animal '''
         return '{} es un animal de {} años color {} que pesa {} kilos.'.format(
             self.nombre,
             self.edad,
@@ -17,26 +21,33 @@ class Animal:
         )
     
     @classmethod
-    def obtener_vidas(cls):
-        return cls.vidas
+    def obtener_vidas(cls) -> int:
+        ''' Retorna el número de vidas de un animal '''
+        return cls.VIDAS
 
-    def respirar(self):
+    def respirar(self) -> None:
+        ''' Ejecuta la acción de respirar de un animal '''
         pass
 
 class Gato(Animal):
+    ''' Crea un objeto del tipo gatito '''
 
     # Podemos modificar variables de clase en una subclase
-    vidas = 9
+    VIDAS = 9
 
-    def __init__(self, nombre, edad, peso, color, limpio):
+    def __init__(self, nombre:str, edad:int, peso:float, color:str, limpio:bool):
+        # Cuando tenemos superclases, se puede invocar al constructor de la clase padre
+        # a través de super()
         super().__init__(nombre, edad, peso, color)
-        self.limpio = limpio
+        self.limpio:bool = limpio
 
-    def meow(self):
+    def meow(self) -> None:
+        ''' Accion solamente asociada a los gatitos '''
         pass
 
 class Perro(Animal):
-    def ladrar(self):
+    def ladrar(self) -> None:
+        ''' Accion solamente asociada a nuestro cachorros '''
         pass
 
 tom = Gato('Tom', 3, 7, 'café', limpio=True)
