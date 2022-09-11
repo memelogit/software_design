@@ -1,69 +1,81 @@
-# RELACIONES ENTRE CLASES Y OBJETOS
-
 from __future__ import annotations
 
-# A
 class Superheroe:
-    def __init__(self, nombre:str, ataque:int, armas:list=[], equipo:str = '') -> None:
-        self.nombre = nombre
-        self.ataque = ataque
-        self.equipo = equipo # [Un elemento] Asociación, relación 1 a 1
-        self.armas = armas   # [Lista de elementos] Asociación -> Agregación, relación 1 a muchos
+    ''' Clase A: Que representa al principal objeto que agrega elementos de la clase B '''
+
+    def __init__(self, nombre:str, ataque:int=10, armas:list=[], equipo:str='') -> None:
+        self.nombre:str = nombre
+        self.ataque:int = ataque
+        self.equipo:str = equipo
+        self.armas:list = armas # <- Relación de agregación
         self.salud = 100
+    
     def __str__(self) -> str:
-        return f'-I- nombre={self.nombre}, salud={self.salud}, armas={len(self.armas)}'
+        ''' Retorna los datos del superheroes '''
+        return f'nombre={self.nombre}, salud={self.salud}, armas={len(self.armas)}'
+    
     def __del__(self) -> str:
-        print(f'-I- Nuestro personaje murió {self.nombre}')
-    def atacar(self, otro:Superheroe):
-        print(f'-I- {self.nombre} está peleando con {otro.nombre}')
+        print(f'Nuestro personaje llamado {self.nombre} murió')
+        return f'Nuestro personaje llamado {self.nombre} murió'
+    
+    def atacar(self, otro:Superheroe) -> None:
+        ''' Simula el ataque del superheroe a otro. Le reduce la vida '''
+        print(f'{self.nombre} está peleandpo con {otro.nombre}')
         for arma in self.armas:
-            print(f'    Atacando con {arma.nombre}')
+            print(f'  atacando con {arma.nombre}')
             otro.salud -= self.ataque + arma.destruccion
             arma.resistencia -= 1
 
-# B
 class Arma:
+    ''' Clase B: Que contine el objeto el cual será "agregado" a la clase A '''
     def __init__(self, nombre:str, resistencia:int, destruccion:int) -> None:
         self.nombre = nombre
         self.resistencia = resistencia
         self.destruccion = destruccion
+    
     def __str__(self) -> str:
-        return self.nombre
+        ''' Retorna el nombre de la empresa '''
+        return f'{self.nombre}'
 
-# Componentes
-martillo = Arma(
-    nombre='Martillo',
-    resistencia=6,
-    destruccion=6
-)
-rayo = Arma(
-    nombre='Rayo',
-    resistencia=1,
-    destruccion=10
-)
-arco = Arma(
-    nombre='Arco',
-    resistencia=4,
-    destruccion=3
-)
+# Código Cliente
+if __name__ == '__main__':
+    # Armas que son los componentes
+    martillo = Arma(
+        resistencia=6,
+        nombre='Martillo',
+        destruccion=7
+    )
+    
+    rayo = Arma(
+        resistencia=1,
+        nombre='Rayo',
+        destruccion=10
+    )
+    
+    arco = Arma(
+        resistencia=4,
+        nombre='Arco',
+        destruccion=3
+    )
 
-# Contenedores: En la composición un contenedor "usa o tiene" componentes
-thor = Superheroe(
-    nombre='Thor',
-    ataque=20,
-    armas=[rayo, martillo] # Asociación -> Agregación
-)
-ojo_halcon = Superheroe(
-    nombre='Ojo de Halcón',
-    ataque=18,
-    armas=[arco] # Asociación -> Agregación
-)
+    # Superheroes que son los contenedores
+    thor = Superheroe(
+        nombre = 'Thor dios del trueno',
+        ataque=20,
+        armas=[martillo, rayo] # Asociación que se especializa en una "agregación"
+    )
 
-# Pongámoslos a pelear
-print(ojo_halcon)
-thor.atacar(ojo_halcon)
-print(ojo_halcon)
+    ojo_de_halcón = Superheroe(
+        nombre = 'Ojo de Halcón',
+        ataque=14,
+        armas=[arco] # Asociación que se especializa en una "agregación"
+    )
 
-# Al eliminar a los superheroes aun se siguen conservando las armas
-del thor
-print(f'-I- Resistencia del martillo: {martillo.resistencia}')
+    # Pongámoslos a pelear
+    print(ojo_de_halcón)
+    thor.atacar(ojo_de_halcón)
+    print(ojo_de_halcón)
+
+    del thor
+    ojo_de_halcón.armas.append(martillo)
+    print(ojo_de_halcón)

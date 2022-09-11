@@ -1,56 +1,50 @@
-# Aplicación de E-Commerce en donde se tiene un método para
-# calcular el total de la orden con impuestos
+# Principios del diseño de software
+
+from __future__ import annotations
+from ast import Or
+from enum import Enum, unique
 
 class Producto:
-    def __init__(self, descripcion, cantidad, precio):
-        self.descripcion = descripcion
-        self.cantidad = cantidad
-        self.precio = precio # Asumiremos un precio en pesos
-
-# Extraemos el código y creamos una nueva clase para el manejo de impuestos
-class Impuesto:
-
-    mx = 0.20
-    us = 0.07
-
-    @classmethod
-    def tasa_impuestos(cls, pais):
-        if pais == 'US':
-            return cls.mx
-        elif pais == 'MX':
-            return cls.us
-        else:
-            raise Exception('No se tiene el referencia de impuestos aún.')
-    
-    @classmethod
-    def cambiar_valor(cls, pais, valor):
-        pass
+    ''' Define a un producto y adicionalmente nos dice la cantidad de productos necesarios para una orden '''
+    def __init__(self, descripcion:str, cantidad:int, precio:float) -> None:
+        self.descripcion:str = descripcion
+        self.cantidad:int = cantidad
+        self.precio:float = precio
 
 class Orden:
-    def __init__(self, pais):
-        self.pais = pais
-        self.ordenes = []
-    
-    def agregar(self, producto):
-        self.ordenes.append(producto)
 
-    def total_orden(self):
+    # Encapsulamiento a nivel de clase en donde nosotros podemos definir
+    # mas paises en un futuro "Encapsula lo que varía"
+    @unique
+    class Pais(Enum):
+        #name      = value
+        MEXICO     = 0.20
+        USA        = 0.07
+        COSTA_RICA = 0.12
+
+    def __init__(self, pais:Pais) -> None:
+        self.pais:Orden.Pais = pais
+        self.productos:list = [] # 
+    
+    def agregar(self, producto:Producto) -> None:
+        ''' Agrega productos al carrito de compras '''
+        self.productos.append(producto)
+    
+    def total_orden(self) -> float:
+        ''' Retorna el valor total de la orden al leer cada producto y aumentar el impuesto
+        correspondiente a cada país '''
         total = 0
-        for orden in self.ordenes:
-            total += orden.precio * orden.cantidad
-        total += total * Impuesto.tasa_impuestos(self.pais)
+        for p in self.productos:
+            total += p.precio * p.cantidad
+        total += total * self.pais.value
+        
         return total
 
-victor = Orden('MX')
-victor.agregar(Producto('Blusas azules', 5, 120))
-victor.agregar(Producto('Bolsas Lacoste', 2, 4000))
-victor.agregar(Producto('Reloj Michael Kors', 5, 8000))
+# Código Cliente
+if __name__ == '__main__':
+    carrito = Orden(Orden.Pais.COSTA_RICA)
+    carrito.agregar(Producto('Blusas azules', 4, 1200))
+    carrito.agregar(Producto('Reloj Michael Kors', 1, 5800))
+    carrito.agregar(Producto('Blusas Lacoste', 6, 799))
 
-print(victor.total_orden())
-
-hugo = Orden('US')
-hugo.agregar(Producto('Blusas azules', 5, 120))
-hugo.agregar(Producto('Bolsas Lacoste', 2, 4000))
-hugo.agregar(Producto('Reloj Michael Kors', 5, 8000))
-
-print(hugo.total_orden())
+    print(carrito.total_orden())

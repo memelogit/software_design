@@ -1,42 +1,51 @@
-# Aplicación de E-Commerce en donde se tiene un método para
-# calcular el total de la orden con impuestos
+# Principios del diseño de software
+
+from __future__ import annotations
+from enum import Enum, unique
 
 class Producto:
-    def __init__(self, descripcion, cantidad, precio):
-        self.descripcion = descripcion
-        self.cantidad = cantidad
-        self.precio = precio # Asumiremos un precio en pesos
+    ''' Define a un producto y adicionalmente nos dice la cantidad de productos necesarios para una orden '''
+    def __init__(self, descripcion:str, cantidad:int, precio:float) -> None:
+        self.descripcion:str = descripcion
+        self.cantidad:int = cantidad
+        self.precio:float = precio
 
 class Orden:
-    def __init__(self, pais):
-        self.pais = pais
-        self.ordenes = []
-    
-    def agregar(self, producto):
-        self.ordenes.append(producto)
 
-    def total_orden(self):
+    @unique
+    class Pais(Enum):
+        MEXICO = 'MX'
+        USA    = 'US'
+
+    def __init__(self, pais:Pais) -> None:
+        self.pais:Orden.Pais = pais
+        self.productos:list = [] # 
+    
+    def agregar(self, producto:Producto) -> None:
+        ''' Agrega productos al carrito de compras '''
+        self.productos.append(producto)
+    
+    def total_orden(self) -> float:
+        ''' Retorna el valor total de la orden al leer cada producto y aumentar el impuesto
+        correspondiente a cada país '''
         total = 0
-        for orden in self.ordenes:
-            total += orden.precio * orden.cantidad
+        for p in self.productos:
+            total += p.precio * p.cantidad
         
-        if self.pais == 'US':
-            total += total * 0.07
-        elif self.pais == 'MX':
-            total += total * 0.20
+        if self.pais == Orden.Pais.USA:
+            total += total*0.07
+        elif self.pais == Orden.Pais.MEXICO:
+            total += total*0.20
+        else:
+            raise RuntimeError('El país no está definido')
         
         return total
 
-victor = Orden('MX')
-victor.agregar(Producto('Blusas azules', 5, 120))
-victor.agregar(Producto('Bolsas Lacoste', 2, 4000))
-victor.agregar(Producto('Reloj Michael Kors', 5, 8000))
+# Código Cliente
+if __name__ == '__main__':
+    carrito = Orden(Orden.Pais.MEXICO)
+    carrito.agregar(Producto('Blusas azules', 4, 1200))
+    carrito.agregar(Producto('Reloj Michael Kors', 1, 5800))
+    carrito.agregar(Producto('Blusas Lacoste', 6, 799))
 
-print(victor.total_orden())
-
-antonio = Orden('US')
-antonio.agregar(Producto('Blusas azules', 5, 120))
-antonio.agregar(Producto('Bolsas Lacoste', 2, 4000))
-antonio.agregar(Producto('Reloj Michael Kors', 5, 8000))
-
-print(antonio.total_orden())
+    print(carrito.total_orden())
