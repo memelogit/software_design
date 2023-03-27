@@ -1,14 +1,13 @@
 # DISEÑO DE SOFTWARE
 # MODULO 4 - PATRONES DE DISEÑO
 # FACTORY METHOD
-# 26 DE SEPTIEMBRE 2022
+# 27 DE MARZO 2023
 
 from abc import ABC, abstractmethod
 from enum import Enum
 
 # 1.- Interface para productos
 class Bloque(ABC):
-    @abstractmethod
     def colocar(self) -> str:
         ''' Coloca un nuevo tipo de bloque en el mapa '''
         pass
@@ -41,6 +40,7 @@ class CamaPiedra(Bloque):
 
 # 3.- Factory (Clase creadora)
 class Mundo:
+    @abstractmethod
     def crear_bloque(self, tipo) -> Bloque:
         ''' Crea un nuevo tipo de bloque desde el inventario de productos '''
         return tipo.value
@@ -64,10 +64,10 @@ class ModoSupervivencia(Mundo):
         PIEDRA           = Piedra()
         GRANITO          = Granito()
         PASTO            = Pasto()
-        HORNO            = CamaPiedra()
+        HORNO            = Horno()
 
 if __name__ == '__main__':
     mundo = ModoCreativo()
 
-    p1 = mundo.crear_bloque(mundo.TipoBloque.PIEDRA)
+    p1 = mundo.crear_bloque(mundo.TipoBloque.CAMA_DE_PIEDRA)
     print(p1.colocar())
