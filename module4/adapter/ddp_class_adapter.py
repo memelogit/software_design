@@ -3,7 +3,10 @@
 # implementarse en lenguajes de programación que soporten la herencia múltiple
 
 # Clase principal en funcionamiento
-class Entero:
+from abc import ABC
+
+
+class Entero(ABC):
     @classmethod
     def sumar(cls, *numeros:int) -> int:
         ''' Suma n cantidad de números enteros '''

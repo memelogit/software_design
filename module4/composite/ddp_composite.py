@@ -1,119 +1,90 @@
-from abc import ABC, abstractmethod
-from typing import List
+# DISEÑO DE SOFTWARE
+# MODULO 4 - PATRONES DE DISEÑO ESTRUCTURALES
+# COMPOSITE
+
+from abc import ABC
 from random import randrange
-from enum import Enum
 
-# -----------------------------------------------------------------------------
-# 1.- Componente (Interface)
-# -----------------------------------------------------------------------------
-# La interfaz Componente describe operaciones que son comunes a
-# elementos simples y complejos del árbol.
+# Interfase del componente
 class Elemento(ABC):
+  ''' Interfase del elemento componente '''
 
-    @property
-    def padre(self): # -> Elemento
-        return self._base
+  def costo(self) -> int:
+    ''' Retorna el costo en entero del elemento en la estructura de arbol '''
+    pass
+  
+  def mostrar(self, indent:int=0) -> str:
+    ''' Muestra la estructura de arbol a partir de este elemento '''
+    pass
 
-    @padre.setter
-    def padre(self, padre):
-        self._base = padre
-
-    @abstractmethod
-    def mostrar(self, indent: int = 0) -> str:
-        pass
-
-    @abstractmethod
-    def costo(self) -> str:
-        pass
-
-# -----------------------------------------------------------------------------
-# 2.- Hoja (Clase Concreta)
-# -----------------------------------------------------------------------------
-# La Hoja es un elemento básico de un árbol que no tiene subelementos.
+# Hoja que es una clase concreta
 class Persona(Elemento):
+  ''' Clase que representa el último elemento de la estructura de arbol '''
 
-    COSTO_MIN = 500
-    COSTO_MAX = 1000
+  COSTO_MIN = 500
+  COSTO_MAX = 2000
 
-    def __init__(self, nombre: str) -> None:
-        self.nombre = nombre
-        self._costo = randrange(self.COSTO_MIN, self.COSTO_MAX)
+  def __init__(self, nombre:str) -> None:
+    self.nombre = nombre
+    self._costo = randrange(Persona.COSTO_MIN, Persona.COSTO_MAX)
+  
+  def costo(self) -> int:
+    ''' Retorna el costo en entero del elemento en la estructura de arbol '''
+    return self._costo
+  
+  def mostrar(self, indent:int=0) -> str:
+    ''' Muestra la estructura de arbol a partir de este elemento '''
+    #     - Victor $500\n
+    #     - Hugo $500\n
+    #     - Paco $500\n
+    return ' ' * indent + '- ' + self.nombre + ' $' + str(self._costo) + '\n'
 
-    def costo(self) -> int:
-        return self._costo
-    
-    def mostrar(self, indent: int = 0):
-        return ' ' * indent + '- ' + self.nombre + ' $' + str(self._costo) + '\n'
-
-
-# -----------------------------------------------------------------------------
-# 3.- Contenedor (Clase Concreta)
-# -----------------------------------------------------------------------------
-# Es un elemento que tiene subelementos: hojas u otros contenedores.
+# Composite (Contenedor)
 class Departamento(Elemento):
-    def __init__(self, nombre: str) -> None:
-        self.hijos = []
-        self.nombre = nombre
+  ''' Clase composite que contiene elementos '''
+  def __init__(self, nombre:str) -> None:
+    self.nombre = nombre
+    self.hijos:list = []
+  
+  def agregar(self, elemento:Elemento) -> None:
+    ''' Agrega elementos a nuestra estructura de arbol '''
+    self.hijos.append(elemento)
+  
+  def eliminar(self, elemento:Elemento) -> None:
+    ''' Remueve elementos del composite '''
+    self.hijos.remove(elemento)
+  
+  def costo(self) -> int:
+    ''' Retorna el costo en entero del elemento en la estructura de arbol '''
+    costo_total = 0
+    for hijo in self.hijos:
+      costo_total += hijo.costo()
+    return costo_total
+  
+  def mostrar(self, indent: int = 0) -> str:
+    ''' Muestra la estructura de arbol a partir de este elemento '''
+    #     + DESI\n
+    #       - Hugo $500\n
+    detalle_hijos = ' ' * indent + '+ ' + self.nombre + '\n'
+    for hijo in self.hijos:
+      detalle_hijos += ' ' * indent + hijo.mostrar(indent + 2)
+    return detalle_hijos
 
-    def agregar(self, elemento: Elemento) -> None:
-        self.hijos.append(elemento)
-        elemento.padre = self
+if __name__ == '__main__':
+  victor = Persona('Víctor')
+  
+  iteso = Departamento('ITESO Rectoría')
+  administracion = Departamento('Dirección de administración y finanzas')
+  administracion.agregar(Persona('Pedrito'))
+  administracion.agregar(Persona('Junito'))
+  academico = Departamento('Dirección general académica')
+  desi = Departamento('Departamento de electronica, sistemas e informática')
+  academico.agregar(desi)
+  academico.agregar(Persona('Rosita'))
+  desi.agregar(victor)
+  desi.agregar(Persona('Iván Villalón'))
+  iteso.agregar(administracion)
+  iteso.agregar(academico)
 
-    def eliminar(self, elemento: Elemento) -> None:
-        self.hijos.remove(elemento)
-        elemento.padre = None
-
-    def costo(self) -> int:
-        costo_total = 0
-        for hijo in self.hijos:
-            costo_total += hijo.costo()
-        return costo_total
-    
-    def mostrar(self, indent: int = 0):
-        detalle_hijos = ' ' * indent + '+ ' + self.nombre + '\n'
-        for hijo in self.hijos:
-            detalle_hijos += ' ' * indent + hijo.mostrar(indent + 2)
-        return detalle_hijos
-
-if __name__ == "__main__":
-    
-    class Moneda(Enum):
-        PESOS_MEXICANOS = 1
-        DOLARES         = 0.05
-
-    def calcular_costo(costo, moneda: Moneda = Moneda.PESOS_MEXICANOS):
-        print('${:,.2f} {}\n'.format(
-            costo * moneda.value,
-            moneda.name.capitalize()
-        ))
-
-    # Suponemos que queremos crear un solo elemento de la hoja
-    # y obtener su costo
-    victor = Persona('Víctor')
-    print('-I- ¿Cuál sería el costo de contratar a Víctor? (Una sola hoja)')
-    calcular_costo(victor.costo(), Moneda.DOLARES)
-
-    # Ahora... vamos creando algo mas complejo
-    iteso = Departamento('Rectoría')
-
-    administracion = Departamento('Dirección de administración y finanzas')
-    administracion.agregar(Persona('Pedro'))
-    administracion.agregar(Persona('Rogelio'))
-
-    academia = Departamento('Dirección general académica')
-    desi = Departamento('Departamento de electrónica, sistemas e informática')
-    desi.agregar(Persona('Iván Villalón'))
-    desi.agregar(Persona('Francisco Cervantes'))
-    dfh = Departamento('Departamento de formación humana')
-    dfh.agregar(Persona('Juan Pablo'))
-    academia.agregar(desi)
-    academia.agregar(dfh)
-
-    iteso.agregar(administracion)
-    iteso.agregar(academia)
-
-    print('-I- ¿Cuál sería el costo de la nómina del ITESO? (Una arbol)')
-    calcular_costo(iteso.costo())
-
-    print('-I- Ahora mostremos el detalle de nuestro árbol')
-    print(iteso.mostrar())
+  print(desi.costo())
+  print(desi.mostrar())
