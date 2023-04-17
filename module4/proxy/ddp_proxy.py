@@ -1,118 +1,126 @@
-from abc import ABC, abstractmethod
+# Creamos la clase de servicio
+# Esta clase de servicio normalmente ya esta creada y nosotros no
+# podemos abrir su código (modificarlo)
+from abc import ABC
+from typing import List
 
-# -----------------------------------------------------------------------------
-# Singleto auxiliar
-# -----------------------------------------------------------------------------
-def singleton(clase):
-    instancias = {}
-    def obtener_instancia(*args, **kwargs):
-        if clase not in instancias:
-            instancias[clase] = clase(*args, **kwargs)
-        return instancias[clase]
-    return obtener_instancia
+class MongoDB():
+    '''
+    Clase del cliente para manejo de operaciones de MongoDB
+    Se supone que esta clase ya existe y no es posible modificarla
 
-# -----------------------------------------------------------------------------
-# 1.- Service Interface
-# -----------------------------------------------------------------------------
-class Operaciones(ABC):
-    @abstractmethod
-    def obtener_usuarios(self, role:str) -> list:
-        pass
+    tabla_usuarios: {'ID': {'nombre': NOMBRE, 'role':ROLE, 'nivel_acceso':NIVEL}}
+    tabla_roles: {'ROL': ['1234', '1235']}
+    '''
+    def __init__(self) -> None:
+        self._tabla_usuarios:dict = {}
+        self._tabla_roles:dict = {}
 
-# -----------------------------------------------------------------------------
-# 2.- Service
-# -----------------------------------------------------------------------------
-@singleton
-class MongoMejorado(Operaciones):
+    def insertar_usuario(self, id:str, **datos:dict) -> None:
+        '''
+        Inserta un nuevo usario en la tabla de usuarios basado
+        en el id dado como argumento
+        '''
+        self._tabla_usuarios[id] = {
+            'nombre': datos['nombre'],
+            'nivel_acceso': datos['nivel_acceso']
+        }
+        if self._tabla_roles.get(datos['role']) is None:
+            self._tabla_roles[datos['role']] = []
+        self._tabla_roles[datos['role']].append(id)
 
-    def __init__(self):
-        self.__table_users = {}
-        self.__table_roles = {}
     
-    def llenar_datos(self):
-        # Tabla usuarios, nivel de accesso: privado
-        self.__table_users = {
-            '11223344': {
-                'nombre': 'Victor Martinez',
-                'nivel_acceso': 3
-            },
-            '22334455': {
-                'nombre': 'Pepe Pecas',
-                'nivel_acceso': 2
-            },
-            '33445566': {
-                'nombre': 'Sergio el bailador',
-                'nivel_acceso': 1
-            },
-        }
-
-        # Tabla roles, nivel de accesso: privado
-        self.__table_roles = {
-            'profesor': ['11223344', '33445566'],
-            'investigador': ['11223344', '22334455']
-        }
-
-    def obtener_usuarios(self, role:str) -> None:
+    def obtener_usuarios(self, role:str) -> str:
         '''
-        Imprime la lista de usuarios asignados a un role
+        Retorna la lista de usuarios asociada a un role
+          - Victor
+          - Juanito
         '''
-        for user_id in self.__table_roles[role]:
-            print('  -', self.__table_users[user_id]['nombre'])
+        lista_usuarios:List[str] = []
+        for user_id in self._tabla_roles[role]:
+            lista_usuarios.append(self._tabla_usuarios[user_id]['nombre'])
+            
+        return '\n-'.join(lista_usuarios)
     
     def obtener_nivel_acceso(self, id:str) -> int:
-        if self.__table_users.get(id) is None:
-            print(f'-E- El usuario con el id {id} no existe')
+        '''
+        Obtiene el nivel de acceso de un usuario
+        0 - Cuando el usuario no existe
+        1 - Publico
+        2 - Confidential
+        3 - Top secret
+        '''
+        if self._tabla_usuarios.get(id) is None:
             return 0
         else:
-            return self.__table_users[id]['nivel_acceso']
+            return self._tabla_usuarios[id]['nivel_acceso']
+
+# Interfase de servicio
+class Operaciones(ABC):
+    '''
+    Interfase de servicio usada para mantener los métodos comunes a 
+    los clientes o usuarios
+    '''
+    def obtener_usuarios(self, role:str) -> str:
+        '''
+        Retorna la lista de usuarios asociada a un role
+          - Victor
+          - Juanito
+        '''
+        pass
+
+# Proxy
+class ProxyTopSecret(Operaciones):
+    '''
+    Clase proxy que mantiene el control de acceso a los métodos definidos
+    en la interfase de servicio
+    '''
+    def __init__(self, db:MongoDB) -> None:
+        self._db:MongoDB = db
     
-    def insertar_usuario(self, id:str, **datos) -> None:
-        self.__table_users[id] = {
-            'nivel_acceso': datos['nivel_acceso'],
-            'nombre': datos['nombre']
-        }
-        self.__table_roles[datos['role']].append(id)
-
-# -----------------------------------------------------------------------------
-# 3.- Proxy
-# -----------------------------------------------------------------------------
-class Proxy(Operaciones):
-    def __init__(self, db: MongoMejorado) -> None:
-        self.__db = db
-
-    def obtener_usuarios(self, role:str, id_solicitante:str) -> None:
-        if self.check_access(id_solicitante):
-            self.log_access()
-            self.__db.obtener_usuarios(role)
-        else:
-            print('-E- Permisos insuficientes para obtener datos')
-            return None
-
-    def check_access(self, id:str) -> bool:
-        if self.__db.obtener_nivel_acceso(id) > 2:
+    def validar_acceso(self, user_id:str) -> bool:
+        '''
+        Returna True si el nivel de acceso del user_id corresponde
+        con el de la base de datos
+        '''
+        if int(self._db.obtener_nivel_acceso(user_id)) >= 3:
             return True
         else:
             return False
-
-    def log_access(self) -> None:
-        print('-I- Insertando una entrada en el archivo de accesso...')
-
-
-if __name__ == "__main__":
-    print('-I- Ejecución de la consulta directamente usando el objeto MongoMejorado')
-    db = MongoMejorado()
-    db.llenar_datos()
-    db.insertar_usuario('99887766', nombre='Ivan Villalon', role='profesor', nivel_acceso='2')
-    db.obtener_usuarios('profesor')
-    print('-' * 80)
-
-    print('-I- Ejecución de la consulta usando un proxy a un nuevo objeto MongoMejorado')
-    db2 = MongoMejorado()
-    db2.llenar_datos()
-    proxy = Proxy(db2)
-    proxy.obtener_usuarios('profesor', '11223344')
-    print('-' * 80)
     
-    print('-I- Ejecución de la consulta usando un proxy a un objeto MongoMejorado existente')
-    proxy = Proxy(db)
-    proxy.obtener_usuarios('profesor', '11223344')
+    def obtener_usuarios(self, role: str, user_id_request:int=0) -> str:
+        '''
+        Método modificado dentro de la clase proxy al que le 
+        añadimos la validación del nivel de acceso
+        '''
+        if self.validar_acceso(user_id_request):
+            return self._db.obtener_usuarios(role)
+        else:
+            raise RuntimeError('No tienes el nivel de acceso necesario para acceder a la información')
+
+# Código del cliente
+if __name__ == '__main__':
+    db = MongoDB()
+    db.insertar_usuario(
+        '000001',
+        nombre='Iván Villalón',
+        role='Profesor',
+        nivel_acceso='3'
+    )
+    
+    db.insertar_usuario(
+        '000002',
+        nombre='Francisco Cervantes',
+        role='Profesor',
+        nivel_acceso='2'
+    )
+    
+    db.insertar_usuario(
+        '000003',
+        nombre='Victor Martinez',
+        role='Profesor',
+        nivel_acceso='2'
+    )
+
+    proxy = ProxyTopSecret(db)
+    print(proxy.obtener_usuarios('Profesor', '000002'))
